@@ -1,0 +1,851 @@
+.layout{
+  display:grid;
+  grid-template-columns: 320px 1fr 360px;
+  gap:16px;
+  padding:16px;
+  height: calc(100vh - 0px);
+  box-sizing:border-box;
+  background:#f6f7fb;
+}
+
+.col{ min-width:0; }
+.panel{
+  height:100%;
+  background:#fff;
+  border:1px solid #e6e8f0;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 14px 10px 14px;
+  border-bottom:1px solid #eef0f6;
+}
+
+.title{ font-weight:700; font-size:16px; }
+.subtitle{ font-size:12px; color:#666; margin-top:2px; }
+
+.btn{
+  border:1px solid #d7dbea;
+  background:#fff;
+  border-radius:10px;
+  padding:8px 10px;
+  font-size:12px;
+  cursor:pointer;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+
+.btn:hover{ background:#f3f5fb; }
+.btn.wide{ width:100%; margin-top:10px; }
+.btn.ghost{ background:#fff; }
+
+/* hover generico (bottoni normali) */
+.details .btn:hover,
+.panel-header .btn:hover{
+  background:#f3f5fb;
+}
+
+/* ===== DANGER ===== */
+.btn.danger{
+  border-color:#f1b4b4;
+}
+.btn.danger:hover{
+  background:#fff5f5;
+  border-color:#ea9a9a;
+}
+
+/* ✅ PRIORITÀ ASSOLUTA: danger vince sempre */
+.details .btn.danger:hover,
+.panel-header .btn.danger:hover{
+  background:#fff5f5;
+  border-color:#ea9a9a;
+}
+
+.input{
+  margin:12px 14px 10px 14px;
+  padding:10px 12px;
+  border:1px solid #d7dbea;
+  border-radius:10px;
+  outline:none;
+}
+.input:focus{ border-color:#9aa6ff; }
+
+.list{
+  padding:0 8px 10px 8px;
+  overflow:auto;
+}
+
+.list-item{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid transparent;
+  background:transparent;
+  cursor:pointer;
+  text-align:left;
+}
+.list-item:hover{
+  background:#f6f7fb;
+  border-color:#eef0f6;
+}
+
+.avatar{
+  width:34px; height:34px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  background:#eef0ff;
+  font-weight:700;
+  font-size:12px;
+}
+
+.meta .name{ font-weight:600; font-size:13px; }
+.meta .id{ font-size:12px; color:#666; margin-top:2px; }
+
+.empty{
+  padding:14px;
+  color:#666;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+.tree-wrap{
+  padding:14px;
+  overflow-x:auto;
+  overflow-y:auto;
+}
+
+
+.layout{
+  display:grid;
+  grid-template-columns: 320px 1fr 360px;
+  gap:16px;
+  padding:16px;
+  height: calc(100vh - 0px);
+  box-sizing:border-box;
+  background:#f6f7fb;
+}
+
+.col{ min-width:0; }
+.panel{
+  height:100%;
+  background:#fff;
+  border:1px solid #e6e8f0;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 14px 10px 14px;
+  border-bottom:1px solid #eef0f6;
+}
+
+.title{ font-weight:700; font-size:16px; }
+.subtitle{ font-size:12px; color:#666; margin-top:2px; }
+
+.btn{
+  border:1px solid #d7dbea;
+  background:#fff;
+  border-radius:10px;
+  padding:8px 10px;
+  font-size:12px;
+  cursor:pointer;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+
+.btn:hover{ background:#f3f5fb; }
+.btn.wide{ width:100%; margin-top:10px; }
+.btn.ghost{ background:#fff; }
+
+/* hover generico (bottoni normali) */
+.details .btn:hover,
+.panel-header .btn:hover{
+  background:#f3f5fb;
+}
+
+/* ===== DANGER ===== */
+.btn.danger{
+  border-color:#f1b4b4;
+}
+.btn.danger:hover{
+  background:#fff5f5;
+  border-color:#ea9a9a;
+}
+
+/* ✅ PRIORITÀ ASSOLUTA: danger vince sempre */
+.details .btn.danger:hover,
+.panel-header .btn.danger:hover{
+  background:#fff5f5;
+  border-color:#ea9a9a;
+}
+
+.input{
+  margin:12px 14px 10px 14px;
+  padding:10px 12px;
+  border:1px solid #d7dbea;
+  border-radius:10px;
+  outline:none;
+}
+.input:focus{ border-color:#9aa6ff; }
+
+.list{
+  padding:0 8px 10px 8px;
+  overflow:auto;
+}
+
+.list-item{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid transparent;
+  background:transparent;
+  cursor:pointer;
+  text-align:left;
+}
+.list-item:hover{
+  background:#f6f7fb;
+  border-color:#eef0f6;
+}
+
+.avatar{
+  width:34px; height:34px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  background:#eef0ff;
+  font-weight:700;
+  font-size:12px;
+}
+
+.meta .name{ font-weight:600; font-size:13px; }
+.meta .id{ font-size:12px; color:#666; margin-top:2px; }
+
+.empty{
+  padding:14px;
+  color:#666;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+.tree{
+  min-width: max-content;
+}
+
+
+
+
+.tree-wrap{
+  padding:14px;
+  overflow:auto;
+}
+
+/* ================================ */
+/* ===== TREE TOP -> DOWN ORG ===== */
+/* ================================ */
+
+.tree-wrap{
+  padding:14px;
+  overflow:auto;
+}
+
+/* ogni ul è una riga di nodi */
+.tree{
+  list-style:none;
+  margin:0;
+  padding:0;
+
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:22px;
+
+  position:relative;
+}
+
+/* ogni li è una colonna: nodo sopra + (eventuali) figli sotto */
+.tree > li{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin:0;
+  padding:0;
+}
+
+/* spazio tra genitore e figli */
+.tree > li > .tree{
+  margin-top:18px;   /* distanza tra box e connettori */
+  padding-top:18px;  /* spazio per la barra orizzontale */
+  position:relative;
+}
+
+/* ===================== */
+/* CONNETTORI (PULITI)   */
+/* ===================== */
+
+/* 1) dal GENITORE: linea che scende (ancorata al .node, non al li) */
+.tree > li:has(> .tree) > .node::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:-18px;        /* esce sotto il box */
+  width:1px;
+  height:18px;
+  background:#d7dbea;
+}
+
+/* 2) barra orizzontale sopra i figli: SOLO se ci sono almeno 2 figli
+   la barra va dal centro del primo al centro dell’ultimo (110px = metà nodo da 220px) */
+.tree > li > .tree:has(> li:nth-child(2))::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:110px;
+  right:110px;
+  height:1px;
+  background:#d7dbea;
+}
+
+/* 3) per ogni FIGLIO: linea che sale fino alla barra (ancorata al .node) */
+.tree > li > .tree > li > .node::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  top:-18px;           /* sale sopra il box */
+  width:1px;
+  height:18px;
+  background:#d7dbea;
+}
+
+/* Se c’è UN SOLO figlio: niente barra orizzontale */
+.tree > li > .tree:has(> li:only-child)::before{
+  content:none;
+}
+
+/* ===== NODO: invariato (solo tolto margin-left) ===== */
+.node{
+  width:220px;
+  border:1px solid #d7dbea;
+  background:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+  cursor:pointer;
+  text-align:left;
+  box-shadow:0 4px 10px rgba(0,0,0,.04);
+  margin-left:0;
+
+  position:relative; /* serve per ::before/::after */
+  z-index:2;         /* sopra le linee */
+}
+.node:hover{ background:#f6f7fb; }
+.node.selected{
+  border-color:#7b88ff;
+  box-shadow:0 0 0 3px rgba(123,136,255,.2);
+}
+
+.node-title{ font-weight:700; font-size:13px; }
+.node-sub{ font-size:12px; color:#666; margin-top:2px; }
+
+
+/* ===== DETAILS ===== */
+.details{ padding:14px; overflow:auto; }
+
+.details-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 0;
+}
+
+.label{ color:#666; font-size:12px; }
+.value{ font-weight:600; font-size:13px; }
+.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.divider{
+  height:1px;
+  background:#eef0f6;
+  margin:12px 0;
+}
+
+/* ===== ASSEGNAZIONI (pannello destro) ===== */
+.section-title{
+  font-weight:700;
+  font-size:12px;
+  color:#333;
+  margin: 6px 0 8px 0;
+}
+
+.assignments{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.assignment{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  border:1px solid #eef0f6;
+  border-radius:12px;
+  padding:10px;
+}
+
+.a-main{
+  flex:1;
+  min-width:0;
+}
+
+.a-role{
+  font-weight:700;
+  font-size:12px;
+}
+
+.a-emp{
+  margin-top:2px;
+  font-weight:600;
+  font-size:12px;
+  color:#333;
+}
+
+.a-date{
+  margin-top:2px;
+  font-size:11px;
+  color:#666;
+}
+
+/* ===== ICON BUTTONS (cestini ecc.) ===== */
+.icon-btn{
+  margin-left:auto;
+  border:1px solid #d7dbea;
+  background:#fff;
+  border-radius:10px;
+  padding:6px 8px;
+  cursor:pointer;
+  line-height:1;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+
+/* hover normale */
+.icon-btn:hover{
+  background:#f6f7fb;
+}
+
+/* ✅ CESTINO: hover rosso */
+.icon-btn.danger{
+  border-color:#f1b4b4;
+}
+
+.icon-btn.danger:hover{
+  background:#fff5f5;
+  border-color:#ea9a9a;
+  color:#b00020; /* rende rosso anche l’emoji 🗑️ */
+}
+
+/* ===== ERROR ===== */
+.error{
+  margin-top:6px;
+  color:#b00020;
+  font-size:12px;
+}
+
+/* ===== ALERT ===== */
+.alert.error{
+  margin:10px 14px 0 14px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #f1b4b4;
+  background:#fff5f5;
+  color:#8a1c1c;
+  font-size:12px;
+}
+
+.alert.error .msg{
+  line-height:1.35;
+}
+
+.alert.error .x{
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size:14px;
+  line-height:1;
+  padding:0 2px;
+  color:inherit;
+}
+
+/* ===== MODAL (CENTRATO SEMPRE) ===== */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.35);
+  z-index: 50;
+
+  display:flex;
+  align-items:center;      /* ✅ centro verticale */
+  justify-content:center;  /* ✅ centro orizzontale */
+}
+
+.modal{
+  position:relative; /* ✅ non più fixed + translate */
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  background:#fff;
+  border:1px solid #e6e8f0;
+  border-radius:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.25);
+  z-index: 60;
+  overflow:hidden;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 12px;
+  border-bottom:1px solid #eef0f6;
+}
+
+.modal-body{
+  padding:12px;
+}
+
+.form-row{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.modal-footer{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  padding:12px;
+  border-top:1px solid #eef0f6;
+}
+
+.hint{
+  font-size:12px;
+  color:#666;
+  margin-top:6px;
+}
+
+/* ===== RUOLI MODAL ===== */
+.roles-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height:280px;
+  overflow:auto;
+  padding-right:4px;
+}
+
+.role-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border:1px solid #eef0f6;
+  border-radius:12px;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* (rimane come nel tuo: duplicato voluto) */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.35);
+  z-index: 50;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 12px;
+}
+
+.modal{
+  position:relative;
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 24px);
+  overflow:auto;
+  z-index: 60;
+}
+
+.role-item:hover{ background:#f6f7fb; }
+.role-item input{ width:16px; height:16px; }
+.role-item.hidden{ display:none; }
+
+/* responsive */
+@media (max-width:1100px){
+  .layout{ grid-template-columns:1fr; height:auto; }
+  .panel{ height:auto; }
+}
+
+
+/* ===== DETAILS ===== */
+.details{ padding:14px; overflow:auto; }
+
+.details-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 0;
+}
+
+.label{ color:#666; font-size:12px; }
+.value{ font-weight:600; font-size:13px; }
+.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.divider{
+  height:1px;
+  background:#eef0f6;
+  margin:12px 0;
+}
+
+/* ===== ASSEGNAZIONI (pannello destro) ===== */
+.section-title{
+  font-weight:700;
+  font-size:12px;
+  color:#333;
+  margin: 6px 0 8px 0;
+}
+
+.assignments{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.assignment{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  border:1px solid #eef0f6;
+  border-radius:12px;
+  padding:10px;
+}
+
+.a-main{
+  flex:1;
+  min-width:0;
+}
+
+.a-role{
+  font-weight:700;
+  font-size:12px;
+}
+
+.a-emp{
+  margin-top:2px;
+  font-weight:600;
+  font-size:12px;
+  color:#333;
+}
+
+.a-date{
+  margin-top:2px;
+  font-size:11px;
+  color:#666;
+}
+
+/* ===== ICON BUTTONS (cestini ecc.) ===== */
+.icon-btn{
+  margin-left:auto;
+  border:1px solid #d7dbea;
+  background:#fff;
+  border-radius:10px;
+  padding:6px 8px;
+  cursor:pointer;
+  line-height:1;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+
+/* hover normale */
+.icon-btn:hover{
+  background:#f6f7fb;
+}
+
+/* ✅ CESTINO: hover rosso */
+.icon-btn.danger{
+  border-color:#f1b4b4;
+}
+
+.icon-btn.danger:hover{
+  background:#fff5f5;
+  border-color:#ea9a9a;
+  color:#b00020; /* rende rosso anche l’emoji 🗑️ */
+}
+
+/* ===== ERROR ===== */
+.error{
+  margin-top:6px;
+  color:#b00020;
+  font-size:12px;
+}
+
+/* ===== ALERT ===== */
+.alert.error{
+  margin:10px 14px 0 14px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #f1b4b4;
+  background:#fff5f5;
+  color:#8a1c1c;
+  font-size:12px;
+}
+
+.alert.error .msg{
+  line-height:1.35;
+}
+
+.alert.error .x{
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size:14px;
+  line-height:1;
+  padding:0 2px;
+  color:inherit;
+}
+
+/* ===== MODAL (CENTRATO SEMPRE) ===== */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.35);
+  z-index: 50;
+
+  display:flex;
+  align-items:center;      /* ✅ centro verticale */
+  justify-content:center;  /* ✅ centro orizzontale */
+}
+
+.modal{
+  position:relative; /* ✅ non più fixed + translate */
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  background:#fff;
+  border:1px solid #e6e8f0;
+  border-radius:14px;
+  box-shadow:0 18px 50px rgba(0,0,0,.25);
+  z-index: 60;
+  overflow:hidden;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 12px;
+  border-bottom:1px solid #eef0f6;
+}
+
+.modal-body{
+  padding:12px;
+}
+
+.form-row{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.modal-footer{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  padding:12px;
+  border-top:1px solid #eef0f6;
+}
+
+.hint{
+  font-size:12px;
+  color:#666;
+  margin-top:6px;
+}
+
+/* ===== RUOLI MODAL ===== */
+.roles-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height:280px;
+  overflow:auto;
+  padding-right:4px;
+}
+
+.role-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border:1px solid #eef0f6;
+  border-radius:12px;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* (rimane come nel tuo: duplicato voluto) */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.35);
+  z-index: 50;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 12px;
+}
+
+.modal{
+  position:relative;
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 24px);
+  overflow:auto;
+  z-index: 60;
+}
+
+.role-item:hover{ background:#f6f7fb; }
+.role-item input{ width:16px; height:16px; }
+.role-item.hidden{ display:none; }
+
+/* responsive */
+@media (max-width:1100px){
+  .layout{ grid-template-columns:1fr; height:auto; }
+  .panel{ height:auto; }
+}

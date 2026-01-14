@@ -1,0 +1,390 @@
+<div class="layout">
+
+  <!-- SINISTRA: Registro dipendenti -->
+  <aside class="col left">
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="title">Registro dipendenti</div>
+          <div class="subtitle">Elenco e ricerca</div>
+        </div>
+        <button class="btn" (click)="openCreateEmployeeModal()">+ Nuovo</button>
+      </div>
+
+      <input
+        class="input"
+        type="text"
+        placeholder="Cerca per nome o ID..."
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange($event)"
+      />
+
+      <div class="list">
+        <ng-container *ngIf="(filteredEmployees$ | async) as employees">
+
+          <div *ngIf="employees.length === 0" class="empty">
+            Nessun dipendente. Premi “+ Nuovo”.
+          </div>
+
+          <button class="list-item" *ngFor="let e of employees" type="button">
+            <div class="avatar">{{ e.name?.[0] ?? '?' }}{{ e.surname?.[0] ?? '?' }}</div>
+
+            <div class="meta">
+              <div class="name">{{ e.name }} {{ e.surname }}</div>
+              <div class="id">{{ e.id }}</div>
+            </div>
+
+            <!-- 🗑️ ELIMINA DIPENDENTE -->
+            <button
+              class="icon-btn danger"
+              type="button"
+              title="Elimina dipendente"
+              (click)="onDeleteEmployee(e.id); $event.stopPropagation()"
+            >
+              🗑️
+            </button>
+          </button>
+
+        </ng-container>
+      </div>
+    </div>
+  </aside>
+
+
+  <!-- CENTRO: Organigramma -->
+  <main class="col center">
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="title">Organigramma</div>
+          <div class="subtitle">Clicca un nodo per vedere i dettagli</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" *ngIf="!(tree$ | async)" (click)="openCreateUnitModal(null)">+ Radice</button>
+        </div>
+      </div>
+
+      <ng-container *ngIf="(tree$ | async) as tree; else loadingTpl">
+
+        <div *ngIf="!tree" class="empty">
+          Nessuna unità presente. Crea la prima unità: sarà la radice dell’organigramma.
+          <div style="margin-top:10px;">
+            <button class="btn" (click)="openCreateUnitModal(null)">+ Crea prima unità</button>
+          </div>
+        </div>
+
+        <div *ngIf="tree" class="tree-wrap">
+          <ul class="tree">
+            <ng-container *ngTemplateOutlet="nodeTpl; context: { $implicit: tree }"></ng-container>
+          </ul>
+        </div>
+
+      </ng-container>
+
+      <ng-template #loadingTpl>
+        <div class="empty">Caricamento...</div>
+      </ng-template>
+
+      <ng-template #nodeTpl let-node>
+        <li>
+          <button
+            type="button"
+            class="node"
+            [class.selected]="(selectedUnitId$ | async) === node.id"
+            (click)="onSelectUnit(node)"
+          >
+            <div class="node-title">{{ node.name }}</div>
+            <div class="node-sub">{{ node.id }}</div>
+          </button>
+
+          <ul *ngIf="node.children?.length" class="tree">
+            <ng-container *ngFor="let child of node.children">
+              <ng-container *ngTemplateOutlet="nodeTpl; context: { $implicit: child }"></ng-container>
+            </ng-container>
+          </ul>
+        </li>
+      </ng-template>
+    </div>
+  </main>
+
+  <!-- DESTRA: Dettaglio contestuale -->
+  <aside class="col right">
+    <div class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="title">Dettaglio</div>
+          <div class="subtitle">Unità selezionata</div>
+        </div>
+      </div>
+
+      <div class="alert error" *ngIf="unitDeleteError">
+        <div class="msg">{{ unitDeleteError }}</div>
+        <button type="button" class="x" (click)="unitDeleteError = ''">✕</button>
+      </div>
+
+      <div *ngIf="!(selectedUnit$ | async)" class="empty">
+        Seleziona un’unità nell’organigramma, oppure crea una unità root dal centro.
+      </div>
+
+      <div *ngIf="(selectedUnit$ | async) as selectedUnit" class="details">
+        <div class="details-row">
+          <div class="label">Unità</div>
+          <div class="value">{{ selectedUnit.name }}</div>
+        </div>
+
+        <div class="details-row">
+          <div class="label">ID</div>
+          <div class="value mono">{{ selectedUnit.id }}</div>
+        </div>
+
+        <div class="details-row">
+          <div class="label">Figli</div>
+          <div class="value">{{ selectedUnit.children?.length ?? 0 }}</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="btn wide" (click)="openCreateUnitModal(selectedUnit.id)">
+          + Aggiungi sotto-unità
+        </button>
+
+        <button type="button" class="btn wide danger" (click)="onDeleteUnit(selectedUnit.id)">
+          🗑️ Elimina unità
+        </button>
+
+        <button class="btn wide ghost" (click)="openAllowedRolesModal(selectedUnit.id)">
+          Gestisci ruoli ammessi
+        </button>
+
+        <button class="btn wide ghost" (click)="openAssignModal(selectedUnit.id)">
+          Assegna dipendente
+        </button>
+
+        <div class="divider"></div>
+
+        <div class="section-title">Assegnazioni in questa unità</div>
+
+        <div class="empty" *ngIf="(assignments$ | async) as list; else assLoading">
+          <ng-container *ngIf="list.length === 0">
+            Nessuna assegnazione.
+          </ng-container>
+
+          <div class="assignments" *ngIf="list.length > 0">
+            <div class="assignment" *ngFor="let a of list">
+              <div class="a-main">
+                <div class="a-role">{{ a.roleName }}</div>
+                <div class="a-emp">{{ a.employeeName }} {{ a.employeeSurname }}</div>
+                <div class="a-date" *ngIf="a.startDate">Dal {{ a.startDate }}</div>
+              </div>
+
+              <button
+                class="icon-btn danger"
+                type="button"
+                title="Rimuovi assegnazione"
+                (click)="removeAssignment(selectedUnit.id, a.employeeId, a.roleId)"
+              >
+                🗑️
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #assLoading>
+          <div class="empty">Caricamento assegnazioni...</div>
+        </ng-template>
+      </div>
+    </div>
+  </aside>
+
+
+  <!-- MODAL: Nuova unità -->
+  <div class="modal-backdrop" *ngIf="isCreateUnitOpen" (click)="closeCreateUnitModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="title">Nuova unità</div>
+        <button class="btn" (click)="closeCreateUnitModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-row">
+          <label class="label">Nome unità</label>
+          <input class="input" [(ngModel)]="unitForm.name" placeholder="Es: Amministrazione" />
+        </div>
+
+        <div class="hint" *ngIf="unitForm.parentId">
+          Verrà creata sotto: <span class="mono">{{ unitForm.parentId }}</span>
+        </div>
+        <div class="hint" *ngIf="!unitForm.parentId">
+          Verrà creata come unità root.
+        </div>
+
+        <div class="error" *ngIf="formError">{{ formError }}</div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn ghost" (click)="closeCreateUnitModal()">Annulla</button>
+        <button class="btn" (click)="submitCreateUnit()">Crea</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: Nuovo dipendente -->
+  <div class="modal-backdrop" *ngIf="isCreateEmployeeOpen" (click)="closeCreateEmployeeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="title">Nuovo dipendente</div>
+        <button class="btn" (click)="closeCreateEmployeeModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-row">
+          <label class="label">Nome</label>
+          <input class="input" [(ngModel)]="empForm.name" placeholder="Es: Mario" />
+        </div>
+
+        <div class="form-row">
+          <label class="label">Cognome</label>
+          <input class="input" [(ngModel)]="empForm.surname" placeholder="Es: Rossi" />
+        </div>
+
+        <div class="error" *ngIf="empError">{{ empError }}</div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn ghost" (click)="closeCreateEmployeeModal()">Annulla</button>
+        <button class="btn" (click)="submitCreateEmployee()">Crea</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: Ruoli ammessi -->
+  <div class="modal-backdrop" *ngIf="isAllowedRolesOpen" (click)="closeAllowedRolesModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="title">Ruoli ammessi</div>
+        <button class="btn" (click)="closeAllowedRolesModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="form-row">
+          <label class="label">Cerca ruolo</label>
+          <input class="input" [(ngModel)]="rolesSearch" placeholder="Es: HR, Admin..." />
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-row">
+          <label class="label">Crea nuovo ruolo</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input
+              class="input"
+              style="margin:0; flex:1;"
+              [(ngModel)]="newRoleName"
+              placeholder="Nome ruolo"
+            />
+            <button class="btn" type="button" (click)="submitCreateRole()">Crea</button>
+          </div>
+        </div>
+
+        <div class="error" *ngIf="rolesModalError">{{ rolesModalError }}</div>
+
+        <div class="divider"></div>
+
+        <div class="roles-list" *ngIf="(roles$ | async) as roles">
+          <div class="empty" *ngIf="roles.length === 0">
+            Nessun ruolo. Creane uno sopra.
+          </div>
+
+          <label
+            class="role-item"
+            *ngFor="let r of roles"
+            [class.hidden]="rolesSearch && !r.name.toLowerCase().includes(rolesSearch.toLowerCase())"
+          >
+            <input
+              type="checkbox"
+              [checked]="isRoleAllowed(r.id)"
+              (change)="toggleRole(r, $any($event.target).checked)"
+            />
+            <span>{{ r.name }}</span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn ghost" (click)="closeAllowedRolesModal()">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: Assegna dipendente -->
+  <div class="modal-backdrop" *ngIf="isAssignOpen" (click)="closeAssignModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <div class="title">Assegna dipendente</div>
+        <button class="btn" (click)="closeAssignModal()">✕</button>
+      </div>
+
+      <div class="modal-body" *ngIf="(selectedUnit$ | async) as selectedUnit">
+
+        <div class="hint">
+          Unità: <span class="mono">{{ selectedUnit.name }}</span>
+        </div>
+
+        <div class="form-row" *ngIf="(employees$ | async) as employees">
+          <label class="label">Dipendente</label>
+          <select
+            class="input"
+            [ngModel]="assignForm.employeeId"
+            (ngModelChange)="onAssignEmployeeChange($event)"
+          >
+            <option value="">-- Seleziona --</option>
+            <option *ngFor="let e of employees" [value]="e.id">
+              {{ e.name }} {{ e.surname }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-row" *ngIf="(availableRolesForSelectedEmployee$ | async) as rolesAvail">
+          <label class="label">Ruolo (ammesso)</label>
+          <select
+            class="input"
+            [(ngModel)]="assignForm.roleId"
+            [disabled]="!assignForm.employeeId"
+          >
+            <option value="">-- Seleziona --</option>
+            <option *ngFor="let r of rolesAvail" [value]="r.id">
+              {{ r.name }}
+            </option>
+          </select>
+
+          <div class="hint" *ngIf="!assignForm.employeeId">
+            Seleziona prima un dipendente.
+          </div>
+
+          <div class="hint" *ngIf="assignForm.employeeId && rolesAvail.length === 0">
+            Questo dipendente ha già tutti i ruoli ammessi in questa unità.
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="label">Data inizio</label>
+          <input class="input" type="date" [(ngModel)]="assignForm.startDate" />
+        </div>
+
+        <div class="error" *ngIf="assignError">{{ assignError }}</div>
+      </div>
+
+      <div class="modal-footer" *ngIf="(selectedUnit$ | async) as selectedUnit">
+        <button class="btn ghost" (click)="closeAssignModal()">Annulla</button>
+        <button class="btn" (click)="submitAssignment(selectedUnit.id)">Assegna</button>
+      </div>
+    </div>
+  </div>
+
+</div>
